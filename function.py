@@ -32,13 +32,23 @@ async def command_start(message: types.Message):
                                             'Зігрійся, залишайся з Інтернетом та електроенергією!', reply_markup=markup)
 
 
-@dp.message_handler(lambda message: message.text in ["Магазин 🛒", "🔙Магазин 🛒", "Обігрівачі 🔥🔒", "Скасувати ❌"])
+@dp.message_handler(lambda message: message.text in ["Меню 🚪"])
+async def cmd_shop(message: types.Message):
+    """
+    Menu button
+    """
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, selective=True, one_time_keyboard=True)
+    markup.add("Магазин 🛒", "Про нас ❔")
+    await bot.send_message(message.chat.id, "Вихід у меню...", reply_markup=markup)
+
+
+@dp.message_handler(lambda message: message.text in ["Магазин 🛒", "🔙Магазин 🛒", "Скасувати ❌"])
 async def cmd_shop(message: types.Message):
     """
     Shop entry point
     """
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, selective=True, one_time_keyboard=True)
-    markup.add("Зарядні станції 🔋", "Starlink 💫", "Персональне замовлення")
+    markup.add("Зарядні станції 🔋", "Starlink 💫", "Персональне замовлення 🤝", "Меню 🚪")
     await bot.send_message(message.chat.id, "Ласкаво просимо в наш магазин!", reply_markup=markup)
 
 
@@ -53,23 +63,23 @@ async def cmd_charging_stations(message: types.Message):
 
     # Ecoflow Delta 2
     await bot.send_photo(chat_id=message.chat.id, photo=open('media/ecoflow_delta2.png', 'rb'))
-    await bot.send_message(message.chat.id, "Ecoflow Delta 2\n52.600₴", reply_markup=markup)
+    await bot.send_message(message.chat.id, "Ecoflow Delta 2 ⬆️\n52.600₴", reply_markup=markup)
 
     # Ecoflow Delta Pro
     await bot.send_photo(chat_id=message.chat.id, photo=open('media/ecoflow_deltapro.png', 'rb'))
-    await bot.send_message(message.chat.id, "Ecoflow Delta Pro\n157.000₴", reply_markup=markup)
+    await bot.send_message(message.chat.id, "Ecoflow Delta Pro ⬆️\n157.000₴", reply_markup=markup)
 
     # Ecoflow River 2
     await bot.send_photo(chat_id=message.chat.id, photo=open('media/ecoflow_river2.png', 'rb'))
-    await bot.send_message(message.chat.id, "Ecoflow River 2\n15.700₴", reply_markup=markup)
+    await bot.send_message(message.chat.id, "Ecoflow River 2 ⬆️\n15.700₴", reply_markup=markup)
 
     # Ecoflow River 2 Max
     await bot.send_photo(chat_id=message.chat.id, photo=open('media/ecoflow_river2max.png', 'rb'))
-    await bot.send_message(message.chat.id, "Ecoflow River 2 Max\n28.700₴", reply_markup=markup)
+    await bot.send_message(message.chat.id, "Ecoflow River 2 Max ⬆️\n28.700₴", reply_markup=markup)
 
     # Ecoflow River 2 Pro
     await bot.send_photo(chat_id=message.chat.id, photo=open('media/ecoflow_river2pro.png', 'rb'))
-    await bot.send_message(message.chat.id, "Ecoflow River 2 Pro\n36.500₴", reply_markup=markup)
+    await bot.send_message(message.chat.id, "Ecoflow River 2 Pro ⬆️\n36.500₴", reply_markup=markup)
 
 
 @dp.message_handler(lambda message: message.text in ["Starlink 💫"])
@@ -81,7 +91,7 @@ async def cmd_starlink(message: types.Message):
     markup.add("Starlink 2 gen.", "🔙Магазин 🛒")
     # Starlink 2 gen.
     await bot.send_photo(chat_id=message.chat.id, photo=open('media/starlink_2gen.png', 'rb'))
-    await bot.send_message(message.chat.id, "Starlink 2 gen.\n36.000₴", reply_markup=markup)
+    await bot.send_message(message.chat.id, "Starlink 2 gen. ⬆️\n36.000₴", reply_markup=markup)
 
 
 @dp.message_handler(lambda message: message.text in ["Ecoflow Delta 2", "Ecoflow Delta Pro", "Ecoflow River 2",
@@ -104,13 +114,13 @@ async def cmd_checkout(message: types.Message):
     elif product == "Starlink 2 gen.":
         product_price = "36.000₴"
 
-    await bot.send_message(message.chat.id, '🔲--- Мій чек ---🔲\n'
+    await bot.send_message(message.chat.id, '🔲---- Мій чек ----🔲\n'
                                             'Продукт: {product}\n'
                                             'Ціна: {product_price}\n'
                                             '🔲----------------🔲'.format(product=message.text, product_price=product_price))
 
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, selective=True, one_time_keyboard=True)
-    markup.add("Підтвердити ✅", "Скасувати ❌", "🔙Магазин 🛒")
+    markup.add("Підтвердити ✅", "Скасувати ❌", "🔙Магазин 🛒", "Меню 🚪")
 
     await bot.send_message(message.chat.id, 'Чи все правильно? 🤔', reply_markup=markup)
 
@@ -120,18 +130,17 @@ async def cmd_checkout_yes(message: types.Message):
     """
     Checkout confirmed
     """
-
     await bot.send_message(message.chat.id, "Дякуємо!\n"
-                                            "Тепер перешліть Ваш чек нашому адміну, та домовтеся щодо оплати:")
+                                            "Тепер перешліть Ваш чек нашому адміну, "
+                                            "та домовтеся щодо оплати та доставки:")
     await bot.send_message(message.chat.id, "https://t.me/illiakoshel")
 
 
-@dp.message_handler(lambda message: message.text in ["Персональне замовлення"])
+@dp.message_handler(lambda message: message.text in ["Персональне замовлення 🤝"])
 async def cmd_personal_order(message: types.Message):
     """
     Personal order
     """
-
     await bot.send_message(message.chat.id, "Контакт для персональних замовлень:")
     await bot.send_message(message.chat.id, "https://t.me/illiakoshel")
 
@@ -153,7 +162,8 @@ async def cmd_about_us(message: types.Message):
                                             "це, на нашу думку, дуже сучасно та зручно для наших клієнтів 💛\n\n"
                                             "У разі виникнення складнощів та питань:\n"
                                             "✈️Телеграм: @illiakoshel або @kavooo_q\n"
-                                            "📞Телефон: +380993705838", reply_markup=markup)
+                                            "📞Телефон: +380993705838\n"
+                                            "🤖Розробник бота: @kavooo_q", reply_markup=markup)
 
 
 # Функция для теста состояния бота

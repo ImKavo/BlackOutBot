@@ -133,7 +133,9 @@ async def cmd_checkout_yes(message: types.Message):
     await bot.send_message(message.chat.id, "Дякуємо!\n"
                                             "Тепер перешліть Ваш чек нашому адміну, "
                                             "та домовтеся щодо оплати та доставки:")
-    await bot.send_message(message.chat.id, "https://t.me/illiakoshel")
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, selective=True, one_time_keyboard=True)
+    markup.add("Меню 🚪")
+    await bot.send_message(message.chat.id, "https://t.me/illiakoshel", reply_markup=markup)
 
 
 @dp.message_handler(lambda message: message.text in ["Персональне замовлення 🤝"])
@@ -142,7 +144,9 @@ async def cmd_personal_order(message: types.Message):
     Personal order
     """
     await bot.send_message(message.chat.id, "Контакт для персональних замовлень:")
-    await bot.send_message(message.chat.id, "https://t.me/illiakoshel")
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, selective=True, one_time_keyboard=True)
+    markup.add("Меню 🚪")
+    await bot.send_message(message.chat.id, "https://t.me/illiakoshel", reply_markup=markup)
 
 
 @dp.message_handler(lambda message: message.text in ["Про нас ❔"])

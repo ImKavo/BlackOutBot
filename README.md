@@ -10,5 +10,5 @@ The bot provides a handy way to choose a product for your needs and easily buy i
   4. AWS ECS
   5. AWS IAM
   
-# Telegram bot link: @blackgoout_bot
+# Telegram bot link: https://t.me/blackgoout_bot
  

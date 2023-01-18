@@ -17,7 +17,7 @@ storage = MemoryStorage()
 dp = Dispatcher(bot, storage=storage)
 
 
-# Входная точка диалога
+# Dialog entry point
 @dp.message_handler(commands=['start', 'help'])
 async def command_start(message: types.Message):
     """

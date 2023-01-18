@@ -170,7 +170,6 @@ async def cmd_about_us(message: types.Message):
                                             "🤖Розробник бота: @kavooo_q", reply_markup=markup)
 
 
-# Функция для теста состояния бота
 @dp.message_handler(commands=['test'])
 async def comm_test(message: types.Message):
     """
